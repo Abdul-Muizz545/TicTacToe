@@ -164,6 +164,39 @@ class Game:
                     return False 
         return True
 
+    #display winning (or tie) screen depending on who won 
+    def displayWinningScreen(self):
+        winning_font = pygame.font.SysFont('arial', 20)
+
+        if self.hasComputerWon():
+            winning_surf = winning_font.render("You lost! Click anywhere on screen to play again", True, self.WHITE)
+        elif self.hasPlayerWon():
+            winning_surf = winning_font.render("You won! Click anywhere to play again", True, self.WHITE)
+        else:
+            winning_surf = winning_font.render("It was a TIE! Click anywhere to play again", True, self.WHITE)
+
+        self.screen.fill(self.BLACK)
+        self.screen.blit(winning_surf, (180, 200))
+        pygame.display.update()
+
+        #check to see if user wants to play again
+        displayScreen = True
+        while displayScreen:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    #reset game by emptying out board variable and clearing screen
+                    displayScreen = False
+                    for row in range(0,3):
+                        for col in range(0,3):
+                            self.board[row][col] = 0
+
+                    self.screen.fill(self.WHITE) #reset screen colour to white
+                    self.drawBoard() #draw the lines on the board
+
 
     #main function which has game loop
     def main(self):
@@ -201,38 +234,7 @@ class Game:
                             
             pygame.display.update()
 
-    #display winning (or tie) screen depending on who won 
-    def displayWinningScreen(self):
-        winning_font = pygame.font.SysFont('arial', 20)
-
-        if self.hasComputerWon():
-            winning_surf = winning_font.render("You lost! Click anywhere on screen to play again", True, self.WHITE)
-        elif self.hasPlayerWon():
-            winning_surf = winning_font.render("You won! Click anywhere to play again", True, self.WHITE)
-        else:
-            winning_surf = winning_font.render("It was a TIE! Click anywhere to play again", True, self.WHITE)
-
-        self.screen.fill(self.BLACK)
-        self.screen.blit(winning_surf, (180, 200))
-        pygame.display.update()
-
-        #check to see if user wants to play again
-        displayScreen = True
-        while displayScreen:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    #reset game by emptying out board variable and clearing screen
-                    displayScreen = False
-                    for row in range(0,3):
-                        for col in range(0,3):
-                            self.board[row][col] = 0
-
-                    self.screen.fill(self.WHITE) #reset screen colour to white
-                    self.drawBoard() #draw the lines on the board
+    
 
 if __name__  == "__main__":
     g = Game()
