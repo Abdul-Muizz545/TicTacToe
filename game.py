@@ -219,17 +219,20 @@ class Game:
                         self.playerTurn(rowIndex, colIndex)
                         if self.hasPlayerWon():
                             self.displayWinningScreen()
+                            break
                             #print("Player has won!")
                            
 
                         if self.isItATie():
                             self.displayWinningScreen()
+                            break
                             #print("It is a TIE!!")
                            
 
                         self.computerTurn()
                         if self.hasComputerWon():
                             self.displayWinningScreen()
+                            break
                             #print("Computer has won!")
                             
             pygame.display.update()
